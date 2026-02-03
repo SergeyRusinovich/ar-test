@@ -1,177 +1,182 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AR Просмотр 3D модели</title>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 900px;
-            width: 100%;
-            overflow: hidden;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 900px;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 2em;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        opacity: 0.9;
+        font-size: 1.1em;
+      }
+
+      .viewer-container {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      model-viewer {
+        width: 100%;
+        height: 500px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        --poster-color: #f0f0f0;
+      }
+
+      .info {
+        margin-top: 25px;
+        text-align: center;
+        width: 100%;
+      }
+
+      .info h2 {
+        color: #333;
+        margin-bottom: 15px;
+        font-size: 1.5em;
+      }
+
+      .info p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 15px;
+      }
+
+      .ar-button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-size: 1em;
+        cursor: pointer;
+        margin-top: 15px;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .ar-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      @media (max-width: 768px) {
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
+          padding: 20px;
         }
-        
+
         .header h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
+          font-size: 1.5em;
         }
-        
-        .header p {
-            opacity: 0.9;
-            font-size: 1.1em;
-        }
-        
+
         .viewer-container {
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+          padding: 20px;
         }
-        
+
         model-viewer {
-            width: 100%;
-            height: 500px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            --poster-color: #f0f0f0;
+          height: 400px;
         }
-        
-        .info {
-            margin-top: 25px;
-            text-align: center;
-            width: 100%;
-        }
-        
-        .info h2 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-        
-        .info p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        
-        .ar-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 1em;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .ar-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-        
-        @media (max-width: 768px) {
-            .header {
-                padding: 20px;
-            }
-            
-            .header h1 {
-                font-size: 1.5em;
-            }
-            
-            .viewer-container {
-                padding: 20px;
-            }
-            
-            model-viewer {
-                height: 400px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
-            <h1>🎨 AR Просмотр 3D Модели</h1>
-            <p>Тестовая модель для проверки концепции</p>
+      <div class="header">
+        <h1>🎨 AR Просмотр 3D Модели</h1>
+        <p>Тестовая модель для проверки концепции</p>
+      </div>
+
+      <div class="viewer-container">
+        <model-viewer
+          src="./model.glb"
+          alt="Тестовая 3D модель"
+          auto-rotate
+          camera-controls
+          ar
+          ar-modes="webxr scene-viewer quick-look"
+          shadow-intensity="1"
+          camera-orbit="0deg 75deg 5%"
+          poster="./poster.png"
+        >
+          <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+          </div>
+        </model-viewer>
+
+        <div class="info">
+          <h2>Инструкция по использованию</h2>
+          <p><strong>📱 На мобильном устройстве:</strong></p>
+          <p>1. Нажмите кнопку "Просмотр в AR"</p>
+          <p>2. Разрешите доступ к камере</p>
+          <p>3. Наведите камеру на ровную поверхность</p>
+          <p>4. Нажмите для размещения модели</p>
+          <p>5. Используйте жесты для масштабирования и перемещения</p>
+
+          <button class="ar-button" onclick="document.querySelector('model-viewer').activateAR()">
+            🚀 Просмотр в дополненной реальности
+          </button>
         </div>
-        
-        <div class="viewer-container">
-            <model-viewer 
-                src="model.glb" 
-                alt="Тестовая 3D модель"
-                auto-rotate
-                camera-controls
-                ar
-                ar-modes="webxr scene-viewer quick-look"
-                shadow-intensity="1"
-                camera-orbit="0deg 75deg 5%"
-                poster="poster.png">
-                
-                <div class="progress-bar hide" slot="progress-bar">
-                    <div class="update-bar"></div>
-                </div>
-            </model-viewer>
-            
-            <div class="info">
-                <h2>Инструкция по использованию</h2>
-                <p><strong>📱 На мобильном устройстве:</strong></p>
-                <p>1. Нажмите кнопку "Просмотр в AR"</p>
-                <p>2. Разрешите доступ к камере</p>
-                <p>3. Наведите камеру на ровную поверхность</p>
-                <p>4. Нажмите для размещения модели</p>
-                <p>5. Используйте жесты для масштабирования и перемещения</p>
-                
-                <button class="ar-button" onclick="document.querySelector('model-viewer').activateAR()">
-                    🚀 Просмотр в дополненной реальности
-                </button>
-            </div>
-        </div>
+      </div>
     </div>
-    
+
     <script>
-        // Простая обработка прогресса загрузки
-        const modelViewer = document.querySelector('model-viewer');
-        
-        modelViewer.addEventListener('load', () => {
-            console.log('Модель успешно загружена');
-        });
-        
-        modelViewer.addEventListener('ar-status', (event) => {
-            console.log('AR статус:', event.detail.status);
-        });
-        
-        modelViewer.addEventListener('camera-change', (event) => {
-            console.log('Позиция камеры изменена');
-        });
+      // Простая обработка прогресса загрузки
+      const modelViewer = document.querySelector("model-viewer");
+
+      modelViewer.addEventListener("load", () => {
+        console.log("Модель успешно загружена");
+      });
+
+      modelViewer.addEventListener("ar-status", (event) => {
+        console.log("AR статус:", event.detail.status);
+      });
+
+      modelViewer.addEventListener("camera-change", (event) => {
+        console.log("Позиция камеры изменена");
+      });
     </script>
-</body>
+  </body>
 </html>
